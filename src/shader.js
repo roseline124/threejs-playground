@@ -17,7 +17,7 @@ void main() {
     vec3 blue = vec3(0.0, 0.0, 1.0);
 
     float speed = 0.5;
-    float localTime = uTime * speed + (1.0 - v_uv.x);  // 위치별 시간 오프셋
+    float localTime = uTime * speed + (2.0 - v_uv.x);  // 위치별 시간 오프셋
     float t = mod(localTime, 2.0);  // 0~2 반복
 
     if (t > 1.0) {
