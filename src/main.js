@@ -20,9 +20,20 @@ const geometry = new THREE.PlaneGeometry(2, 2);
 const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
+  uniforms: {
+    uTime: { value: 0 },
+  },
 });
 
 const plane = new THREE.Mesh(geometry, material);
 scene.add(plane);
 
-renderer.render(scene, camera);
+// 애니메이션 루프
+function animate(time) {
+  material.uniforms.uTime.value = time * 0.001; // 시간 업데이트
+  // // sin(uTime) * 0.5 + 0.5
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+
+animate();
