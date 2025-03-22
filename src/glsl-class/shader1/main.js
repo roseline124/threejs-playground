@@ -28,7 +28,7 @@ uniform float u_time;
 
 void main() {
   vec2 v = u_mouse / u_resolution; // 같은 타입끼리만 연산 가능
-  vec3 color = vec3((sin(u_time) + 1.0) / 2.0, (cos(u_time) + 1.0) / 2.0, 1.0);
+  vec3 color = vec3((sin(u_time) + 1.0) / 2.0, (cos(u_time) + 1.0) / 2.0, 1.0); // 둘 다 sin으로 하면 같은 패턴으로 왔다갔다 하므로 변주를 더 주고 싶으면 cos, sin 섞어서.
   gl_FragColor = vec4(color, 1.0);
 }
 `;
