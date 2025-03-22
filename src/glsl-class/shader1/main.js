@@ -26,7 +26,7 @@ uniform vec2 u_mouse;
 uniform vec2 u_resolution;
 
 void main() {
-  vec3 color = vec3(u_mouse.x / u_resolution.x, u_mouse.y / u_resolution.y, 0.0);
+  vec3 color = vec3(u_mouse.x / u_resolution.x, u_mouse.y / u_resolution.y, 1.0);
   gl_FragColor = vec4(color, 1.0);
 }
 `;
@@ -99,6 +99,10 @@ function move(e) {
 }
 
 function animate() {
+  console.log(
+    (uniforms.u_mouse.value.x / uniforms.u_resolution.value.x).toFixed(2),
+    (uniforms.u_mouse.value.y / uniforms.u_resolution.value.y).toFixed(2)
+  );
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
 }
