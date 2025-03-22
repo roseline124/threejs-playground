@@ -22,9 +22,12 @@ void main() {
  */
 const fshader = `
 uniform vec3 u_color;
+uniform vec2 u_mouse;
+uniform vec2 u_resolution;
 
 void main() {
-  gl_FragColor = vec4(u_color, 1.0);
+  vec3 color = vec3(u_mouse.x / u_resolution.x, u_mouse.y / u_resolution.y, 0.0);
+  gl_FragColor = vec4(color, 1.0);
 }
 `;
 
@@ -38,6 +41,9 @@ document.body.appendChild(renderer.domElement);
 const geometry = new THREE.PlaneGeometry(2, 2); // plane is two triangles
 
 const uniforms = {
+  u_time: { value: 0.0 },
+  u_mouse: { value: { x: 0.0, y: 0.0 } },
+  u_resolution: { value: { x: 0.0, y: 0.0 } },
   u_color: { value: new THREE.Color(0, 1, 1) },
 };
 
@@ -54,7 +60,13 @@ camera.position.z = 1;
 
 onWindowResize();
 
-window.addEventListener("resize", onWindowResize, false);
+if ("ontouchstart" in window) {
+  // mobile
+  window.addEventListener("touchmove", move);
+} else {
+  window.addEventListener("resize", onWindowResize, false);
+  window.addEventListener("mousemove", move);
+}
 
 animate();
 
@@ -74,6 +86,16 @@ function onWindowResize(event) {
   camera.bottom = -height;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  if (uniforms.u_resolution) {
+    uniforms.u_resolution.value.x = window.innerWidth;
+    uniforms.u_resolution.value.y = window.innerHeight;
+  }
+}
+
+function move(e) {
+  // support touch move
+  uniforms.u_mouse.value.x = e.touches ? e.touches[0].clientX : e.clientX;
+  uniforms.u_mouse.value.y = e.touches ? e.touches[0].clientY : e.clientY;
 }
 
 function animate() {
