@@ -13,9 +13,9 @@ uniform vec2 u_resolution;
 void main (void)
 {
   vec3 color = vec3(0.0);
-  color.r = clamp(v_position.x, 0.0, 1.0);
-  color.g = clamp(v_position.y, 0.0, 1.0);
-  color.b = clamp(v_position.z, 0.0, 1.0);
+  color.r = step(0.0, v_position.x);
+  color.g = step(0.0, v_position.y);
+  color.b = step(0.0, v_position.z);
   gl_FragColor = vec4(color, 1.0); 
 }
 `;
