@@ -24,11 +24,11 @@ const fshader = `
 uniform vec3 u_color;
 uniform vec2 u_mouse;
 uniform vec2 u_resolution;
-
+uniform float u_time;
 
 void main() {
   vec2 v = u_mouse / u_resolution; // 같은 타입끼리만 연산 가능
-  vec3 color = vec3(v.x, v.y, 1.0);
+  vec3 color = vec3((sin(u_time) + 1.0) / 2.0, (cos(u_time) + 1.0) / 2.0, 1.0);
   gl_FragColor = vec4(color, 1.0);
 }
 `;
@@ -40,6 +40,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+const clock = new THREE.Clock();
 const geometry = new THREE.PlaneGeometry(2, 2); // plane is two triangles
 
 const uniforms = {
@@ -103,4 +104,5 @@ function move(e) {
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+  uniforms.u_time.value = clock.getElapsedTime();
 }
