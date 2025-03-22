@@ -25,8 +25,10 @@ uniform vec3 u_color;
 uniform vec2 u_mouse;
 uniform vec2 u_resolution;
 
+
 void main() {
-  vec3 color = vec3(u_mouse.x / u_resolution.x, u_mouse.y / u_resolution.y, 1.0);
+  vec2 v = u_mouse / u_resolution; // 같은 타입끼리만 연산 가능
+  vec3 color = vec3(v.x, v.y, 1.0);
   gl_FragColor = vec4(color, 1.0);
 }
 `;
@@ -99,10 +101,6 @@ function move(e) {
 }
 
 function animate() {
-  console.log(
-    (uniforms.u_mouse.value.x / uniforms.u_resolution.value.x).toFixed(2),
-    (uniforms.u_mouse.value.y / uniforms.u_resolution.value.y).toFixed(2)
-  );
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
 }
