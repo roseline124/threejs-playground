@@ -72,16 +72,8 @@ float line(float a, float b, float line_width, float edge_thickness){
 
 void main (void)
 {
-  float tile_count = 10.0;
-  vec2 center = vec2(0.5);
-  mat2 matr = getRotationMatrix(u_time);
-//   mat2 mats = getScaleMatrix((sin(u_time) + 1.0)/3.0 + 0.5);
-//   vec2 pt = (mats * matr * (v_position.xy - center)) + center;
-  mat2 mats = getScaleMatrix((sin(u_time) + 1.0)/3.0 + 0.5);
-  vec2 p = fract(v_uv * tile_count);
-  vec2 pt = (matr * (p - center)) + center;
-  vec3 color = vec3(1.0, 1.0, 0.0) *   rect(pt, vec2(0.0), vec2(0.3), center);
-  //rect(v_uv, vec2(0.5), vec2(0.5));
+  vec2 uv = gl_FragCoord.xy;
+  vec3 color = vec3(1.0) * line(v_position.y, sin(v_position.x * 3.1415) * 0.3, 0.001, 0.01);
   gl_FragColor = vec4(color, 1.0); 
 }
 `;
