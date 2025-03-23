@@ -72,7 +72,8 @@ float line(float a, float b, float line_width, float edge_thickness){
 
 void main (void)
 {
-  vec3 color = vec3(1.0, 1.0, 0.0) * circle(v_position.xy, vec2(0.0), 0.1, 0.01);
+  vec2 uv = gl_FragCoord.xy;
+  vec3 color = vec3(1.0) * line(v_position.y, sin(v_position.x * 3.1415) * 0.3, 0.001, 0.01);
   gl_FragColor = vec4(color, 1.0); 
 }
 `;
